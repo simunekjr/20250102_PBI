@@ -3,75 +3,80 @@
 // Licensed under the MIT license.
 // ----------------------------------------------------------------------------
 
-let config = require(__dirname + "/../config/config.json");
-
 function getAuthHeader(accessToken) {
-
     // Function to append Bearer against the Access Token
     return "Bearer ".concat(accessToken);
 }
 
 function validateConfig() {
+    // Validation function to check whether the environment variables are properly set
 
-    // Validation function to check whether the Configurations are available in the config.json file or not
+    const guid = require("guid");
 
-    let guid = require("guid");
-
-    if (!config.authenticationMode) {
-        return "AuthenticationMode is empty. Please choose MasterUser or ServicePrincipal in config.json.";
+    // Check Authentication Mode
+    if (!process.env.AUTHENTICATION_MODE) {
+        return "AUTHENTICATION_MODE is empty. Please set it to MasterUser or ServicePrincipal in environment variables.";
     }
 
-    if (config.authenticationMode.toLowerCase() !== "masteruser" && config.authenticationMode.toLowerCase() !== "serviceprincipal") {
-        return "AuthenticationMode is wrong. Please choose MasterUser or ServicePrincipal in config.json";
+    if (
+        process.env.AUTHENTICATION_MODE.toLowerCase() !== "masteruser" &&
+        process.env.AUTHENTICATION_MODE.toLowerCase() !== "serviceprincipal"
+    ) {
+        return "AUTHENTICATION_MODE is incorrect. Please set it to MasterUser or ServicePrincipal in environment variables.";
     }
 
-    if (!config.clientId) {
-        return "ClientId is empty. Please register your application as Native app in https://dev.powerbi.com/apps and fill Client Id in config.json.";
+    // Check Client ID
+    if (!process.env.CLIENT_ID) {
+        return "CLIENT_ID is empty. Please set it in environment variables.";
     }
 
-    if (!guid.isGuid(config.clientId)) {
-        return "ClientId must be a Guid object. Please register your application as Native app in https://dev.powerbi.com/apps and fill Client Id in config.json.";
+    if (!guid.isGuid(process.env.CLIENT_ID)) {
+        return "CLIENT_ID must be a valid GUID. Please set it in environment variables.";
     }
 
-    if (!config.reportId) {
-        return "ReportId is empty. Please select a report you own and fill its Id in config.json.";
+    // Check Report ID
+    if (!process.env.REPORT_ID) {
+        return "REPORT_ID is empty. Please set it in environment variables.";
     }
 
-    if (!guid.isGuid(config.reportId)) {
-        return "ReportId must be a Guid object. Please select a report you own and fill its Id in config.json.";
+    if (!guid.isGuid(process.env.REPORT_ID)) {
+        return "REPORT_ID must be a valid GUID. Please set it in environment variables.";
     }
 
-    if (!config.workspaceId) {
-        return "WorkspaceId is empty. Please select a group you own and fill its Id in config.json.";
+    // Check Workspace ID
+    if (!process.env.WORKSPACE_ID) {
+        return "WORKSPACE_ID is empty. Please set it in environment variables.";
     }
 
-    if (!guid.isGuid(config.workspaceId)) {
-        return "WorkspaceId must be a Guid object. Please select a workspace you own and fill its Id in config.json.";
+    if (!guid.isGuid(process.env.WORKSPACE_ID)) {
+        return "WORKSPACE_ID must be a valid GUID. Please set it in environment variables.";
     }
 
-    if (!config.authorityUrl) {
-        return "AuthorityUrl is empty. Please fill valid AuthorityUrl in config.json.";
+    // Check Authority URL
+    if (!process.env.AUTHORITY_URL) {
+        return "AUTHORITY_URL is empty. Please set it in environment variables.";
     }
 
-    if (config.authenticationMode.toLowerCase() === "masteruser") {
-        if (!config.pbiUsername || !config.pbiUsername.trim()) {
-            return "PbiUsername is empty. Please fill Power BI username in config.json.";
+    // Check Authentication Mode-specific Variables
+    if (process.env.AUTHENTICATION_MODE.toLowerCase() === "masteruser") {
+        if (!process.env.PBI_USERNAME || !process.env.PBI_USERNAME.trim()) {
+            return "PBI_USERNAME is empty. Please set it in environment variables.";
         }
 
-        if (!config.pbiPassword || !config.pbiPassword.trim()) {
-            return "PbiPassword is empty. Please fill password of Power BI username in config.json.";
+        if (!process.env.PBI_PASSWORD || !process.env.PBI_PASSWORD.trim()) {
+            return "PBI_PASSWORD is empty. Please set it in environment variables.";
         }
-    } else if (config.authenticationMode.toLowerCase() === "serviceprincipal") {
-        if (!config.clientSecret || !config.clientSecret.trim()) {
-            return "ClientSecret is empty. Please fill Power BI ServicePrincipal ClientSecret in config.json.";
-        }
-
-        if (!config.tenantId) {
-            return "TenantId is empty. Please fill the TenantId in config.json.";
+    } else if (process.env.AUTHENTICATION_MODE.toLowerCase() === "serviceprincipal") {
+        if (!process.env.CLIENT_SECRET || !process.env.CLIENT_SECRET.trim()) {
+            return "CLIENT_SECRET is empty. Please set it in environment variables.";
         }
 
-        if (!guid.isGuid(config.tenantId)) {
-            return "TenantId must be a Guid object. Please select a workspace you own and fill its Id in config.json.";
+        if (!process.env.TENANT_ID) {
+            return "TENANT_ID is empty. Please set it in environment variables.";
+        }
+
+        if (!guid.isGuid(process.env.TENANT_ID)) {
+            return "TENANT_ID must be a valid GUID. Please set it in environment variables.";
         }
     }
 }
@@ -79,4 +84,4 @@ function validateConfig() {
 module.exports = {
     getAuthHeader: getAuthHeader,
     validateConfig: validateConfig,
-}
+};
