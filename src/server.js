@@ -3,6 +3,8 @@
 // Licensed under the MIT license.
 // ----------------------------------------------------------------------------
 
+require('dotenv').config(); // Load environment variables from .env file
+
 let path = require('path');
 let embedToken = require(__dirname + '/embedConfigService.js');
 const utils = require(__dirname + "/utils.js");
