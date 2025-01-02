@@ -4,6 +4,9 @@
 // ----------------------------------------------------------------------------
 
 require('dotenv').config(); // Load environment variables from .env file
+console.log("CLIENT_ID:", process.env.CLIENT_ID);
+console.log("TENANT_ID:", process.env.TENANT_ID);
+console.log("AUTHENTICATION_MODE:", process.env.AUTHENTICATION_MODE);
 
 let path = require('path');
 let embedToken = require(__dirname + '/embedConfigService.js');
