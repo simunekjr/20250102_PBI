@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/171d6de8-4e1d-4ca6-a773-bd339533fa01/resourceGroups/VSCtestCONTADORIA_ResourceGroup/providers/Microsoft.Web/sites/VSCtestCONTADORIA",
+    "appService.deploySubpath": "."
+}

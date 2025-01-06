@@ -13,7 +13,7 @@
     "dependencies": {
         "@azure/msal-node": "^1.12.0",
         "body-parser": "^1.19.0",
-        "bootstrap": "^4.4.1",
+        "bootstrap": "^5.3.3",
         "dotenv": "^16.4.7",
         "express": "^4.17.1",
         "guid": "0.0.12",
@@ -23,6 +23,9 @@
         "powerbi-client": "^2.16.5"
     },
     "devDependencies": {
-        "nodemon": "^2.0.2"
+        "nodemon": "^3.1.9"
+    },
+    "engines": {
+        "node": "18.x"
     }
 }
